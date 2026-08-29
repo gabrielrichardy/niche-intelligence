@@ -1,0 +1,96 @@
+import { DashboardData } from "./types";
+
+export function buildMockData(username: string): DashboardData {
+  return {
+    source: "mock",
+    fetchedAt: new Date().toISOString(),
+    note: "Dados de exemplo — configure INSTAGRAM_ACCESS_TOKEN e INSTAGRAM_BUSINESS_ID no .env.local para ver dados reais.",
+    profile: {
+      username,
+      name: "BioDev",
+      bio: "Soluções inovadoras para laboratórios e diagnósticos.",
+    },
+    kpis: {
+      seguidores: 12480,
+      seguidoresGrowthPct: 8.4,
+      engajamentoPct: 6.8,
+      engajamentoGrowthPct: 1.2,
+      publicacoes: 18,
+      publicacoesGrowthPct: 12.5,
+      profileScore: 82,
+      profileScoreLabel: "Bom",
+    },
+    growth: [
+      { date: "01/08", value: 10400 },
+      { date: "07/08", value: 10900 },
+      { date: "14/08", value: 11500 },
+      { date: "21/08", value: 12000 },
+      { date: "28/08", value: 12480 },
+    ],
+    contentTypes: [
+      { label: "Reels", value: 44, color: "#3B82F6" },
+      { label: "Carrosséis", value: 33, color: "#8B5CF6" },
+      { label: "Imagens", value: 17, color: "#22C55E" },
+      { label: "Stories", value: 6, color: "#F59E0B" },
+    ],
+    themes: [
+      { label: "Gestão laboratorial", percent: 28, color: "#3B82F6" },
+      { label: "Tecnologia e inovação", percent: 22, color: "#8B5CF6" },
+      { label: "Qualidade e certificação", percent: 18, color: "#22C55E" },
+      { label: "Saúde e bem-estar", percent: 12, color: "#F59E0B" },
+      { label: "Carreira e mercado", percent: 9, color: "#0EA5E9" },
+      { label: "Outros", percent: 11, color: "#94A3B8" },
+    ],
+    market: [
+      { name: "LabTech", followers: 48200, growthPct: 12.3 },
+      { name: "DiagnoPlus", followers: 31700, growthPct: 8.7 },
+      { name: "BioLabs", followers: 22400, growthPct: 5.1 },
+      { name: "LabExpert", followers: 18900, growthPct: 21.4 },
+      { name: "MedCore", followers: 12600, growthPct: 3.8 },
+    ],
+    topContent: [
+      {
+        id: "1",
+        type: "Reel",
+        title: "5 erros que seu laboratório não pode cometer",
+        date: "22/08/2025",
+        views: 48200,
+        likes: 3200,
+        comments: 420,
+        multiplier: 4.8,
+      },
+      {
+        id: "2",
+        type: "Carrossel",
+        title: "Como aumentar a eficiência do seu laboratório",
+        date: "15/08/2025",
+        views: 31400,
+        likes: 2100,
+        comments: 310,
+        multiplier: 3.6,
+      },
+      {
+        id: "3",
+        type: "Reel",
+        title: "Tecnologia que transforma o diagnóstico",
+        date: "08/08/2025",
+        views: 28700,
+        likes: 1800,
+        comments: 260,
+        multiplier: 2.9,
+      },
+    ],
+    people: [
+      { name: "Juliana Martins", role: "CEO — LabTech", score: 92 },
+      { name: "Rafael Costa", role: "Diretor de Operações — DiagnoPlus", score: 88 },
+      { name: "Fernanda Lima", role: "Proprietária — BioLabs", score: 84 },
+      { name: "Carlos Almeida", role: "Gestor — LabExpert", score: 78 },
+    ],
+    opportunities: [
+      { name: "LabTech", type: "Empresa", score: 91, note: "Alto potencial de parceria" },
+      { name: "Juliana Martins", type: "Pessoa", score: 88, note: "Decisora no mercado-alvo" },
+      { name: "DiagnoPlus", type: "Empresa", score: 88, note: "Expansão recente" },
+      { name: "Fernanda Lima", type: "Pessoa", score: 84, note: "Engajamento crescente" },
+    ],
+  };
+}
