@@ -95,11 +95,16 @@ Veja `CONTRIBUTING.md` para o passo a passo completo.
 
 ## Roadmap
 
-As próximas funcionalidades estão acompanhadas como Issues no GitHub:
+O backlog está acompanhado como Issues no GitHub — veja o
+[board de Issues](https://github.com/gabrielrichardy/niche-intelligence/issues).
 
-- Conectar dados reais do Instagram (token long-lived)
-- Histórico de crescimento real (snapshots diários)
-- Módulos da sidebar: Conteúdo, Market Radar, Pessoas, Empresas
-- Market Radar, Pessoas e Oportunidades com dados reais
-- Busca funcional no Header
-- Testes automatizados (Vitest)
+| # | Issue | Escopo |
+| - | ----- | ------ |
+| 1 | [Conectar dados reais do Instagram (token long-lived)](https://github.com/gabrielrichardy/niche-intelligence/issues/1) | `src/lib/instagram.ts` |
+| 2 | [Histórico de crescimento real (snapshots diários)](https://github.com/gabrielrichardy/niche-intelligence/issues/2) | `getDashboardData` (growth) |
+| 3 | [Ativar módulo "Conteúdo" na sidebar](https://github.com/gabrielrichardy/niche-intelligence/issues/3) | `src/components/Sidebar.tsx` |
+| 4 | [Market Radar com dados reais](https://github.com/gabrielrichardy/niche-intelligence/issues/4) | `mockData.market` |
+| 5 | [Pessoas Relevantes + enriquecimento](https://github.com/gabrielrichardy/niche-intelligence/issues/5) | `mockData.people` |
+| 6 | [Oportunidades com scoring real](https://github.com/gabrielrichardy/niche-intelligence/issues/6) | `mockData.opportunities` |
+| 7 | [Busca funcional no Header](https://github.com/gabrielrichardy/niche-intelligence/issues/7) | `src/components/Header.tsx` |
+| 8 | [Adicionar testes automatizados (Vitest)](https://github.com/gabrielrichardy/niche-intelligence/issues/8) | CI / `instagram.ts` |
