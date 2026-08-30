@@ -69,9 +69,13 @@ export function DashboardClient({ target }: { target: string }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
         <div className="lg:col-span-2 grid grid-cols-1 gap-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <GrowthChart data={data.growth} />
-            <ContentTypeDonut data={data.contentTypes} total={data.kpis.publicacoes} />
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+            <div className="sm:col-span-2">
+              <GrowthChart data={data.growth} />
+            </div>
+            <div className="col-span-2 sm:col-span-3">
+              <ContentTypeDonut data={data.contentTypes} total={data.kpis.publicacoes} />
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <ThemeAnalysis themes={data.themes} />
