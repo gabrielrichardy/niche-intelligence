@@ -1,10 +1,24 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Niche Intelligence",
-  description: "Painel de inteligência para social media analisar perfis, conteúdos e mercado.",
-};
+async function getMetaVerification(): Promise<string | undefined> {
+  const code = process.env.META_VERIFICATION_CODE?.trim();
+  return code ? code : undefined;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const metaVerification = await getMetaVerification();
+  return {
+    title: "Niche Intelligence",
+    description:
+      "Painel de inteligência para social media analisar perfis, conteúdos e mercado.",
+    other: metaVerification
+      ? {
+          "facebook-domain-verification": metaVerification,
+        }
+      : undefined,
+  };
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

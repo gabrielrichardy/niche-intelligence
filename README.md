@@ -27,6 +27,34 @@ npm run dev
 
 Abra http://localhost:3000
 
+## Deploy na Vercel
+
+O repo está pronto para a Vercel — não precisa de nenhuma configuração extra além das
+variáveis de ambiente. Passos:
+
+1. Em [vercel.com](https://vercel.com), **Add New > Project** e importe o repositório
+   `gabrielrichardy/niche-intelligence`.
+2. Em **Settings > Environment Variables**, adicione (opcional, para dados reais do
+   Instagram):
+   - `INSTAGRAM_ACCESS_TOKEN`
+   - `INSTAGRAM_BUSINESS_ID`
+   - `INSTAGRAM_TARGET_USERNAME`
+3. Clique em **Deploy**. O build usa `npm run build` automaticamente (framework
+   detectado como Next.js).
+4. O dashboard sobe em `https://<seu-projeto>.vercel.app`. O usuário ainda pode
+   escolher o perfil pela URL: `?target=@outro_perfil`.
+
+> Sem as variáveis, o deploy **funciona normalmente** exibindo dados de exemplo.
+
+### Alternativa pela CLI
+
+```bash
+npm i -g vercel
+vercel link        # vincula ao projeto (uma vez)
+vercel env add INSTAGRAM_ACCESS_TOKEN   # repita para as outras 2
+vercel --prod
+```
+
 ## Variáveis de ambiente
 
 Copie o exemplo e preencha para ligar **dados reais** do Instagram:
@@ -44,6 +72,40 @@ cp .env.local.example .env.local
 Sem essas variáveis, o dashboard funciona normalmente com dados de exemplo.
 **O `.env.local` nunca é commitado** (está no `.gitignore`). Veja o passo a passo
 completo em `.env.local.example`.
+
+## Confirmar o app Meta (acesso real ao Instagram)
+
+Para o `business_discovery` devolver dados **reais** (e não cair no mock), o app
+na Meta precisa percorrer este checklist — **é processo no painel da Meta, não
+código**. Faça nesta ordem, porque cada etapa desbloqueia a seguinte:
+
+1. **Criar o app** em developers.facebook.com com produto **Instagram** (Instagram
+   API with Facebook Login). Anote o *App ID*.
+2. **Colocar o app em modo LIVE** (App Dashboard → `Settings > Basic` → App Mode →
+   Live). App em modo Development não chama API real.
+3. **Business Verification** — verificar a empresa no Meta Business Manager
+   (documentos). Sem isso o acesso avançado é rejeitado.
+4. **Domain Verification** — em Business Suite → `Settings > Brand safety >
+   Domains`, adicione o domínio e escolha "Meta Tag". Cole o código no dashboard
+   via `META_VERIFICATION_CODE` (o app injeta o meta-tag sozinho no `<head>`).
+5. **App Review / Advanced Access** — para as permissões
+   `instagram_business_basic` e (**importante**) `instagram_manage_insights`, que
+   é a que efetivamente libera o `business_discovery`. Solicite no painel do app:
+   `App Review > Permissions and Features > Request Advanced Access`.
+6. **Token long-lived (ou System User)** — gere o token no Graph API Explorer com
+   as permissões `instagram_business_basic`, `pages_show_list`,
+   `business_management`. Para não expirar em ~1h, troque por um *long-lived* ou
+   use um **System User** (não expira). Preencha `INSTAGRAM_ACCESS_TOKEN` e
+   `INSTAGRAM_BUSINESS_ID` na Vercel.
+7. **Testar** — abra `/api/instagram` de preferência com `?target=@perfil`; se vier
+   `source: "live"` está pronto. Erros típicos:
+   - `(#10) permission denied`: app não em Live, permissão sem Advanced Access ou
+     faltando `instagram_manage_insights`.
+   - `(#200) Access token has expired`: token curto venceu — use long-lived/System User.
+
+> **Domínio a verificar:** a Meta valida o domínio onde o app roda, então caso o
+> dashboard rode em `niche-intelligence.vercel.app`, o meta-tag precisa estar no
+> `<head>` desse host (é exatamente o que o dashboard faz com `META_VERIFICATION_CODE`).
 
 ## O que já é real vs. exemplo
 

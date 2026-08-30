@@ -1,7 +1,7 @@
 import { ContentItem, ContentTypeSlice, DashboardData, ThemeItem } from "./types";
 import { buildMockData } from "./mockData";
 
-const GRAPH_VERSION = "v21.0";
+const GRAPH_VERSION = "v25.0";
 
 interface RawMedia {
   id: string;
