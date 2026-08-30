@@ -7,7 +7,7 @@ export function ContentTypeDonut({ data, total }: { data: ContentTypeSlice[]; to
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
       <h3 className="font-medium text-slate-900">Tipos de Conteúdo</h3>
-      <div className="flex items-center gap-4 mt-2">
+      <div className="flex items-center gap-4 mt-2 min-w-0">
         <div className="w-32 h-32 relative shrink-0">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -23,14 +23,14 @@ export function ContentTypeDonut({ data, total }: { data: ContentTypeSlice[]; to
             <span className="text-[10px] text-slate-400">publicações</span>
           </div>
         </div>
-        <ul className="space-y-2 text-sm flex-1">
+        <ul className="space-y-2 text-sm flex-1 min-w-0">
           {data.map((d) => (
-            <li key={d.label} className="flex items-center justify-between gap-2">
-              <span className="flex items-center gap-2 text-slate-600">
-                <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
-                {d.label}
+            <li key={d.label} className="flex items-center justify-between gap-2 min-w-0">
+              <span className="flex items-center gap-2 text-slate-600 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: d.color }} />
+                <span className="truncate">{d.label}</span>
               </span>
-              <span className="font-medium text-slate-800">{d.value}%</span>
+              <span className="font-medium text-slate-800 shrink-0">{d.value}%</span>
             </li>
           ))}
         </ul>
