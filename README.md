@@ -27,6 +27,34 @@ npm run dev
 
 Abra http://localhost:3000
 
+## Deploy na Vercel
+
+O repo está pronto para a Vercel — não precisa de nenhuma configuração extra além das
+variáveis de ambiente. Passos:
+
+1. Em [vercel.com](https://vercel.com), **Add New > Project** e importe o repositório
+   `gabrielrichardy/niche-intelligence`.
+2. Em **Settings > Environment Variables**, adicione (opcional, para dados reais do
+   Instagram):
+   - `INSTAGRAM_ACCESS_TOKEN`
+   - `INSTAGRAM_BUSINESS_ID`
+   - `INSTAGRAM_TARGET_USERNAME`
+3. Clique em **Deploy**. O build usa `npm run build` automaticamente (framework
+   detectado como Next.js).
+4. O dashboard sobe em `https://<seu-projeto>.vercel.app`. O usuário ainda pode
+   escolher o perfil pela URL: `?target=@outro_perfil`.
+
+> Sem as variáveis, o deploy **funciona normalmente** exibindo dados de exemplo.
+
+### Alternativa pela CLI
+
+```bash
+npm i -g vercel
+vercel link        # vincula ao projeto (uma vez)
+vercel env add INSTAGRAM_ACCESS_TOKEN   # repita para as outras 2
+vercel --prod
+```
+
 ## Variáveis de ambiente
 
 Copie o exemplo e preencha para ligar **dados reais** do Instagram:
