@@ -11,7 +11,9 @@ import {
   Heart,
   FileBarChart2,
   Settings,
+  LogOut,
 } from "lucide-react";
+import { logout } from "@/app/actions";
 
 const NAV_ITEMS = [
   { label: "Dashboard", icon: LayoutDashboard, active: true },
@@ -69,6 +71,16 @@ export function Sidebar() {
             {item.label}
           </button>
         ))}
+
+        <form action={logout}>
+          <button
+            type="submit"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-400 hover:text-slate-200 hover:bg-white/5"
+          >
+            <LogOut className="w-[18px] h-[18px]" />
+            Sair
+          </button>
+        </form>
       </div>
 
       <div className="m-3 mb-5 p-4 rounded-2xl bg-white/5">

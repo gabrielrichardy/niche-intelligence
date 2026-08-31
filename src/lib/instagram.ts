@@ -81,6 +81,33 @@ function buildContentTypeBreakdown(media: RawMedia[]): ContentTypeSlice[] {
   }));
 }
 
+async function fetchOwnAccount(igUserId: string, accessToken: string): Promise<RawBusinessDiscovery> {
+  const profileUrl = `https://graph.facebook.com/${GRAPH_VERSION}/${igUserId}?fields=username,name,biography,followers_count,media_count&access_token=${accessToken}`;
+  const profileRes = await fetch(profileUrl, { cache: "no-store" });
+  const profileJson = await profileRes.json();
+
+  if (!profileRes.ok || profileJson.error) {
+    throw new Error(profileJson?.error?.message || `Instagram Graph API respondeu ${profileRes.status}`);
+  }
+
+  const mediaUrl = `https://graph.facebook.com/${GRAPH_VERSION}/${igUserId}/media?fields=id,caption,media_type,like_count,comments_count,timestamp,permalink&limit=25&access_token=${accessToken}`;
+  const mediaRes = await fetch(mediaUrl, { cache: "no-store" });
+  const mediaJson = await mediaRes.json();
+
+  if (!mediaRes.ok || mediaJson.error) {
+    throw new Error(mediaJson?.error?.message || `Instagram Graph API respondeu ${mediaRes.status}`);
+  }
+
+  return {
+    username: profileJson.username,
+    name: profileJson.name,
+    biography: profileJson.biography,
+    followers_count: profileJson.followers_count,
+    media_count: profileJson.media_count,
+    media: { data: mediaJson.data ?? [] },
+  };
+}
+
 async function fetchBusinessDiscovery(
   targetUsername: string,
   igBusinessId: string,
@@ -114,7 +141,18 @@ export async function getDashboardData(targetUsername: string): Promise<Dashboar
   }
 
   try {
-    const data = await fetchBusinessDiscovery(targetUsername, igBusinessId, accessToken);
+    let data: RawBusinessDiscovery;
+
+    if (targetUsername) {
+      try {
+        data = await fetchBusinessDiscovery(targetUsername, igBusinessId, accessToken);
+      } catch {
+        data = await fetchOwnAccount(igBusinessId, accessToken);
+      }
+    } else {
+      data = await fetchOwnAccount(igBusinessId, accessToken);
+    }
+
     const media = data.media?.data ?? [];
 
     const totalLikes = media.reduce((s, m) => s + (m.like_count ?? 0), 0);

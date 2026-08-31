@@ -1,11 +1,16 @@
+import { redirect } from "next/navigation";
 import { Sidebar } from "@/components/Sidebar";
 import { Header } from "@/components/Header";
 import { DashboardClient } from "@/components/DashboardClient";
+import { isAuthenticated } from "@/lib/session";
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ target?: string }> }) {
+  if (!(await isAuthenticated())) {
+    redirect("/login");
+  }
+
   const { target: targetParam } = await searchParams;
-  const defaultTarget = process.env.INSTAGRAM_TARGET_USERNAME || "biodev";
-  const target = targetParam || defaultTarget;
+  const target = targetParam || "";
 
   return (
     <div className="min-h-screen">
